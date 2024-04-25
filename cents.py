@@ -13,7 +13,8 @@ def recursive_cents(table, items, dividers, prices, last_divide):
     total = 0
     if items == 0 or dividers == 0:
         total = rounding(sum(prices[:last_divide]))
-        table[items] = total
+        # table[dividers][items] = total
+        table[i] = total
         return total
      
     total = sys.maxsize
@@ -24,10 +25,21 @@ def recursive_cents(table, items, dividers, prices, last_divide):
         dontdivide = recursive_cents(table, items - 1, dividers, prices, last_divide + 1)
         total = min(total, usedivide, dontdivide)
         total = rounding(total)
-        table[i] = total
+        # table[dividers][i] = total
+        table[dividers][i] = total
     return total
 
 def cents(items, dividers, prices):
+    
+
+    # table = []
+    # for i in range(dividers + 1):
+    #     line = []
+    #     for j in range(items):
+    #         line.append(None)
+    #     table.append(line)
+
+
     table = [sys.maxsize] * items
 
     print (table)
