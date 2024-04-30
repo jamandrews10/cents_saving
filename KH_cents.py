@@ -35,12 +35,12 @@ def non_recursive_cents(table, items, dividers, prices):
             elif d >= i:
                 print("DIVIDE BC 2")
                 table[d][i] = table[d - 1][i]
-                last_divide = i
+                last_divide = i - 1
             else:
                 usedivide = table[d - 1][i - 1] + rounding(prices[i - 1])
-                dontdivide = table[d][last_divide] + rounding(sum(prices[last_divide: i]))
+                dontdivide = table[d - 1][last_divide] + rounding(sum(prices[last_divide: i]))
                 
-                print(table[d][last_divide], sum(prices[last_divide: i]), rounding(sum(prices[last_divide + 1: i])))
+                print(table[d - 1][last_divide], sum(prices[last_divide: i]), rounding(prices[i - 1]))
                 print("divide: ", usedivide, "no divide: ", dontdivide)
                 print("last divide: ", last_divide)
 
@@ -89,8 +89,8 @@ def main():
     #items, dividers  = map(int, input().split())
     #prices = [int(x) for x in sys.stdin.readline().split()]
     items = 5
-    dividers = 4
-    prices = [14, 24, 54, 60, 44]
+    dividers = 2
+    prices = [1, 2, 3, 4, 5]
     cents(items, dividers, prices)
 
 if __name__ == "__main__":
