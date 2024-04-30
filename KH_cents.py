@@ -37,16 +37,19 @@ def non_recursive_cents(table, items, dividers, prices):
                 table[d][i] = table[d - 1][i]
                 last_divide = i
             else:
-                usedivide = table[d][last_divide] + rounding(sum(prices[last_divide:i]))
-                dontdivide = table[d - 1][i]
+                usedivide = table[d - 1][i - 1] + rounding(prices[i - 1])
+                dontdivide = table[d][last_divide] + rounding(sum(prices[last_divide: i]))
                 
-                print(table[d][last_divide], sum(prices[last_divide: i + 1]))
+                print(table[d][last_divide], sum(prices[last_divide: i]), rounding(sum(prices[last_divide + 1: i])))
                 print("divide: ", usedivide, "no divide: ", dontdivide)
-                
+                print("last divide: ", last_divide)
+
                 
                 if usedivide < dontdivide:
                     print("use divide")
-                    last_divide = i
+                    last_divide = i - 1
+                    print("new last_divide: ", last_divide)
+
                     total = usedivide
                     table[d][i] = total
                 else:
@@ -56,11 +59,10 @@ def non_recursive_cents(table, items, dividers, prices):
                     table[d][i] = total
             
             print("d: ", d, "i: ", i)
-            print("last divide: ", last_divide)
             pretty_print(table)
             print()
                     
-    return total
+    return table
 
 def cents(items, dividers, prices):
     table = []
@@ -76,7 +78,7 @@ def cents(items, dividers, prices):
     # print()
     # pretty_print(table)
     # print()
-    print (cost)
+    print (cost[dividers][items])
     
     
 def pretty_print(table):
@@ -87,8 +89,8 @@ def main():
     #items, dividers  = map(int, input().split())
     #prices = [int(x) for x in sys.stdin.readline().split()]
     items = 5
-    dividers = 3
-    prices = [5, 2, 8, 3, 1]
+    dividers = 4
+    prices = [14, 24, 54, 60, 44]
     cents(items, dividers, prices)
 
 if __name__ == "__main__":
